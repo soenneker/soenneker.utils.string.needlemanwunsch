@@ -1,13 +1,12 @@
 using System;
 using System.Diagnostics.Contracts;
-using System.Threading.Tasks;
 
 namespace Soenneker.Utils.String.NeedlemanWunsch;
 
 /// <summary>
 /// A utility library for comparing strings via the Needleman-Wunsch algorithm
 /// </summary>
-public static class NeedlemanWunschUtil
+public static class NeedlemanWunschStringUtil
 {
     /// <summary>
     /// Calculates the similarity percentage between two strings using the Needleman-Wunsch algorithm.

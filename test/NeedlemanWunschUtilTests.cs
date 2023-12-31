@@ -23,7 +23,7 @@ public class NeedlemanWunschUtilTests : FixturedUnitTest
     [InlineData("abc", "abcd", 1)]
     public void CalculateSimilarity_Returns_Correct_Similarity_Score(string str1, string str2, int expectedScore)
     {
-        int similarityScore = NeedlemanWunschUtil.CalculateSimilarity(str1, str2);
+        int similarityScore = NeedlemanWunschStringUtil.CalculateSimilarity(str1, str2);
 
         similarityScore.Should().Be(expectedScore);
     }
@@ -40,7 +40,7 @@ public class NeedlemanWunschUtilTests : FixturedUnitTest
     [InlineData("abc", "abcd", 75.0)]
     public void CalculateSimilarityPercentage_Returns_Correct_Percentage(string str1, string str2, double expectedPercentage)
     {
-        double similarityPercentage = NeedlemanWunschUtil.CalculateSimilarityPercentage(str1, str2);
+        double similarityPercentage = NeedlemanWunschStringUtil.CalculateSimilarityPercentage(str1, str2);
 
         similarityPercentage.Should().BeApproximately(expectedPercentage, 0.001);
     }
