@@ -14,7 +14,7 @@
         <AssemblyName>Soenneker.Utils.String.NeedlemanWunsch</AssemblyName>
         <PackageId>Soenneker.Utils.String.NeedlemanWunsch</PackageId>
         <PackageTags>utils string needlemanwunsch needleman wunsch comparison fuzzy dynamic needlemanwunschutil c# .net csharp dotnet</PackageTags>
-        <Copyright>Copyright © 2023 Jake Soenneker</Copyright>
+        <Copyright>Copyright © 2023-2025 Jake Soenneker</Copyright>
         <Authors>Jake Soenneker</Authors>
         <Company>https://soenneker.com</Company>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
