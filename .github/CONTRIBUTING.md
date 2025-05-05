@@ -1,4 +1,4 @@
-# Contributing to Soenneker.Utils.String.NeedlemanWunsch
+﻿# Contributing to Soenneker.Utils.String.NeedlemanWunsch
 
 We're excited that you're interested in contributing!
 
