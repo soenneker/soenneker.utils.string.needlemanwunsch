@@ -1,14 +1,13 @@
 using AwesomeAssertions;
-using Soenneker.Tests.FixturedUnit;
-using Xunit;
+using Soenneker.Tests.HostedUnit;
 
 
 namespace Soenneker.Utils.String.NeedlemanWunsch.Tests;
 
-[Collection("Collection")]
-public class NeedlemanWunschUtilTests : FixturedUnitTest
+[ClassDataSource<Host>(Shared = SharedType.PerTestSession)]
+public class NeedlemanWunschUtilTests : HostedUnitTest
 {
-    public NeedlemanWunschUtilTests(Fixture fixture, ITestOutputHelper output) : base(fixture, output)
+    public NeedlemanWunschUtilTests(Host host) : base(host)
     {
     }
 
