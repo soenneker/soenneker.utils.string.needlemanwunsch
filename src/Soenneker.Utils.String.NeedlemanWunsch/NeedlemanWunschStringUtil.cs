@@ -1,4 +1,5 @@
 using System;
+using System.Buffers;
 using System.Diagnostics.Contracts;
 
 namespace Soenneker.Utils.String.NeedlemanWunsch;
@@ -37,36 +38,51 @@ public static class NeedlemanWunschStringUtil
     [Pure]
     public static int CalculateSimilarity(string s1, string s2)
     {
-        var matrix = new int[s1.Length + 1, s2.Length + 1];
+        ReadOnlySpan<char> rows = s1;
+        ReadOnlySpan<char> columns = s2;
 
-        // Initialize the first row
-        for (var i = 0; i <= s1.Length; i++)
+        if (columns.Length > rows.Length)
         {
-            matrix[i, 0] = i;
+            ReadOnlySpan<char> temp = rows;
+            rows = columns;
+            columns = temp;
         }
 
-        // Initialize the first column
-        for (var j = 1; j <= s2.Length; j++)
-        {
-            matrix[0, j] = j;
-        }
+        int width = columns.Length + 1;
+        int[]? rented = null;
+        Span<int> storage = width <= 256
+            ? stackalloc int[width * 2]
+            : (rented = ArrayPool<int>.Shared.Rent(width * 2)).AsSpan(0, width * 2);
 
-        // Fill in the matrix
-        for (var i = 1; i <= s1.Length; i++)
+        try
         {
-            for (var j = 1; j <= s2.Length; j++)
+            Span<int> previous = storage[..width];
+            Span<int> current = storage[width..];
+
+            for (var j = 0; j < width; j++)
+                previous[j] = j;
+
+            for (var i = 1; i <= rows.Length; i++)
             {
-                int cost = s1[i - 1] == s2[j - 1] ? 0 : 1;
+                current[0] = i;
 
-                int deletion = matrix[i - 1, j] + 1;
-                int insertion = matrix[i, j - 1] + 1;
-                int substitution = matrix[i - 1, j - 1] + cost;
+                for (var j = 1; j < width; j++)
+                {
+                    int cost = rows[i - 1] == columns[j - 1] ? 0 : 1;
+                    current[j] = Math.Min(previous[j] + 1, Math.Min(current[j - 1] + 1, previous[j - 1] + cost));
+                }
 
-                matrix[i, j] = Math.Min(Math.Min(deletion, insertion), substitution);
+                Span<int> swap = previous;
+                previous = current;
+                current = swap;
             }
-        }
 
-        // The similarity score is the value in the bottom-right cell of the matrix
-        return matrix[s1.Length, s2.Length];
+            return previous[^1];
+        }
+        finally
+        {
+            if (rented is not null)
+                ArrayPool<int>.Shared.Return(rented);
+        }
     }
 }
