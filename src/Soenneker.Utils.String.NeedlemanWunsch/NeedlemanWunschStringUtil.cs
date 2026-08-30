@@ -5,7 +5,7 @@ using System.Diagnostics.Contracts;
 namespace Soenneker.Utils.String.NeedlemanWunsch;
 
 /// <summary>
-/// A utility library for comparing strings via the Needleman-Wunsch algorithm
+/// Compares strings using unit-cost global sequence alignment.
 /// </summary>
 public static class NeedlemanWunschStringUtil
 {
@@ -30,11 +30,11 @@ public static class NeedlemanWunschStringUtil
     }
 
     /// <summary>
-    /// Calculates the similarity score between two strings using the Needleman-Wunsch algorithm.
+    /// Calculates the unit-cost insertion, deletion, and substitution distance between two strings using global sequence alignment.
     /// </summary>
     /// <param name="s1">The first string.</param>
     /// <param name="s2">The second string.</param>
-    /// <returns>The similarity score between the two strings.</returns>
+    /// <returns>The edit distance between the two strings. Lower values indicate greater similarity.</returns>
     [Pure]
     public static int CalculateSimilarity(string s1, string s2)
     {
