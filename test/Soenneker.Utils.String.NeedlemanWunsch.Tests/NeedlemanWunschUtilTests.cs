@@ -12,6 +12,24 @@ public class NeedlemanWunschUtilTests : HostedUnitTest
     }
 
     [Test]
+    [Arguments(63)]
+    [Arguments(64)]
+    [Arguments(65)]
+    [Arguments(128)]
+    [Arguments(129)]
+    [Arguments(1024)]
+    [Arguments(1025)]
+    public void Distance_counts_edits_across_word_boundaries(int length)
+    {
+        string middle = new string('a', length - 2);
+        string first = "x" + middle + "y";
+        string second = "λ" + middle.Insert(middle.Length / 2, "!") + "z";
+
+        NeedlemanWunschStringUtil.CalculateSimilarity(first, second).Should().Be(3);
+        NeedlemanWunschStringUtil.CalculateSimilarity(second, first).Should().Be(3);
+    }
+
+    [Test]
     [Arguments("", "", 0)]
     [Arguments("abc", "", 3)]
     [Arguments("", "xyz", 3)]
